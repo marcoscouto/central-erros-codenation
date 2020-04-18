@@ -22,6 +22,6 @@ public class ErrorLog {
     private String details;
     private String origin;
     private LevelEnum level;
-    private LocalDateTime time;
+    private LocalDateTime timestamp;
 
 }
