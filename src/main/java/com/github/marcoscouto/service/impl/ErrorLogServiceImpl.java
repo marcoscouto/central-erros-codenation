@@ -18,7 +18,7 @@ public class ErrorLogServiceImpl implements ErrorLogService {
     @Override
     public List<ErrorLog> findAll() {
         List<ErrorLog> errors = repository.findAll();
-        if(errors.isEmpty()) throw new NotFoundException("Error Log Exception","Error logs not found.");
+        if(errors.isEmpty()) throw new NotFoundException("Error Log Exception","Error logs not found");
         return errors;
     }
 
@@ -39,8 +39,7 @@ public class ErrorLogServiceImpl implements ErrorLogService {
     public ErrorLog update(Long id, ErrorLog newErrorLog) {
         ErrorLog errorLog = findById(id);
         errorLog = updateDataError(errorLog, newErrorLog);
-        repository.save(errorLog);
-        return errorLog;
+        return repository.save(errorLog);
     }
 
     @Override
@@ -50,13 +49,13 @@ public class ErrorLogServiceImpl implements ErrorLogService {
     }
 
     private ErrorLog updateDataError(ErrorLog errorLog, ErrorLog newErrorLog){
-        if(!newErrorLog.getDescription().isEmpty() && !newErrorLog.getDescription().isBlank())
+        if(!newErrorLog.getDescription().isEmpty() && !newErrorLog.getDescription().isBlank() && newErrorLog.getDescription() != null)
             errorLog.setDescription(newErrorLog.getDescription());
-        if(!newErrorLog.getDetails().isEmpty() && !newErrorLog.getDetails().isBlank())
+        if(!newErrorLog.getDetails().isEmpty() && !newErrorLog.getDetails().isBlank() && newErrorLog.getDetails() != null)
             errorLog.setDetails(newErrorLog.getDetails());
-        if(!newErrorLog.getOrigin().isEmpty() && !newErrorLog.getOrigin().isBlank())
+        if(!newErrorLog.getOrigin().isEmpty() && !newErrorLog.getOrigin().isBlank() && newErrorLog.getOrigin() != null)
             errorLog.setOrigin(newErrorLog.getOrigin());
-        if(!newErrorLog.getLevel().toString().isEmpty() && !newErrorLog.getLevel().toString().isBlank())
+        if(!newErrorLog.getLevel().toString().isEmpty() && !newErrorLog.getLevel().toString().isBlank() && newErrorLog.getLevel() != null)
             errorLog.setLevel(newErrorLog.getLevel());
         return errorLog;
     }

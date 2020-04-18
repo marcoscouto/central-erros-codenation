@@ -1,7 +1,7 @@
 package com.github.marcoscouto.resource;
 
-import com.github.marcoscouto.domain.ErrorLog;
-import com.github.marcoscouto.service.ErrorLogService;
+import com.github.marcoscouto.domain.User;
+import com.github.marcoscouto.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,26 +12,26 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/errors")
-public class ErrorLogResource {
+@RequestMapping("/users")
+public class UserResource {
 
-    private final ErrorLogService service;
+    private final UserService service;
 
     @GetMapping
-    public ResponseEntity<List<ErrorLog>> findAll(){
-        List<ErrorLog> response = service.findAll();
+    public ResponseEntity<List<User>> findAll(){
+        List<User> response = service.findAll();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ErrorLog> findById(@PathVariable Long id){
-        ErrorLog response = service.findById(id);
+    public ResponseEntity<User> findById(@PathVariable Long id){
+        User response = service.findById(id);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<ErrorLog> save(@RequestBody ErrorLog errorLog){
-        ErrorLog response = service.save(errorLog);
+    public ResponseEntity<User> save(@RequestBody User user){
+        User response = service.save(user);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -41,11 +41,9 @@ public class ErrorLogResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ErrorLog> update(@PathVariable Long id, @RequestBody ErrorLog errorLog){
-        ErrorLog response = service.update(id, errorLog);
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user){
+        User response = service.update(id, user);
         return ResponseEntity.ok(response);
     }
-
-
 
 }
