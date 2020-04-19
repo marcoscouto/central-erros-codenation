@@ -26,8 +26,8 @@ public class TestConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        ErrorLog e1 = new ErrorLog(null, "Erro de banco de dados", "Erro na conexão do banco de dados, contate o DBA", "Banco de Dados", LevelEnum.ERROR, LocalDateTime.now(ZoneId.of("GMT")));
-        ErrorLog e2 = new ErrorLog(null, "Aviso de tentativa de exclusão", "Uma tentativa de exclusão de registro ocorreu", "Banco de Dados", LevelEnum.WARNING, LocalDateTime.now(ZoneId.of("GMT")));
+        ErrorLog e1 = new ErrorLog(null, "Erro de banco de dados", "Erro na conexão do banco de dados, contate o DBA", "Banco de Dados", LevelEnum.ERROR, LocalDateTime.now(ZoneId.of("GMT")),2 );
+        ErrorLog e2 = new ErrorLog(null, "Aviso de tentativa de exclusão", "Uma tentativa de exclusão de registro ocorreu", "Banco de Dados", LevelEnum.WARNING, LocalDateTime.now(ZoneId.of("GMT")), 3);
 
         errorLogRepository.saveAll(Arrays.asList(e1, e2));
 

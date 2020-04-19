@@ -1,12 +1,13 @@
 package com.github.marcoscouto.service;
 
 import com.github.marcoscouto.domain.ErrorLog;
+import org.springframework.data.domain.Example;
 
 import java.util.List;
 
 public interface ErrorLogService {
 
-    List<ErrorLog> findAll();
+    List<ErrorLog> findAll(Example example, String sort);
 
     ErrorLog findById(Long id);
 
