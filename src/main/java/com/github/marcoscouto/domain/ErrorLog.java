@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -19,11 +21,22 @@ public class ErrorLog implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty(message = "Descrição é obrigatória")
     private String description;
+
+    @NotEmpty(message = "Log é obrigatório")
     private String log;
+
+    @NotEmpty(message = "Origem é obrigatório")
     private String origin;
+
+    @NotNull(message = "Level é obrigatório")
     private LevelEnum level;
+
     private LocalDateTime timestamp;
+
+    @NotNull(message = "Quantidade é obrigatório")
     private Integer quantity;
 
 }

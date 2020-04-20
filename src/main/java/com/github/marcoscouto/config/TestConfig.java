@@ -44,8 +44,8 @@ public class TestConfig implements CommandLineRunner {
 
         errorLogRepository.saveAll(Arrays.asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15));
 
-        User u1 = new User(null, "John Doe", "333", LocalDate.of(1990, 4, 30));
-        User u2 = new User(null, "Jane Doe", "444", LocalDate.of(1993, 8, 12));
+        User u1 = new User(null, "John Doe", "23874442055", LocalDate.of(1990, 4, 30));
+        User u2 = new User(null, "Jane Doe", "23874442055", LocalDate.of(1993, 8, 12));
 
         userRepository.saveAll(Arrays.asList(u1, u2));
 

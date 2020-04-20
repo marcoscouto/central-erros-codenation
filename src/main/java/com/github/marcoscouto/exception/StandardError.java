@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 public class StandardError {
 
     private String title;
-    private String message;
+    private List<String> messages;
     private LocalDateTime timestamp;
 
 }
