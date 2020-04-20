@@ -22,44 +22,55 @@ public class ErrorLogResource {
     private final ErrorLogService service;
 
     @GetMapping
-    public ResponseEntity<Page<ErrorLogDTO>> findAll(ErrorLog data, @RequestParam(value = "orderby") String orderBy, @RequestParam(defaultValue = "0") Integer page){
-        ExampleMatcher exampleMatcher = ExampleMatcher
-                .matching()
-                .withIgnoreCase()
-                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example example = Example.of(data, exampleMatcher);
+    public ResponseEntity<Page<ErrorLogDTO>> findAll(
+            ErrorLog data,
+            @RequestParam(value = "orderby", defaultValue = "id") String orderBy,
+            @RequestParam(defaultValue = "0") Integer page) {
+
+        Example example = Example.of(data, standardExampleMatcher());
         Page<ErrorLogDTO> dto = service.findAll(example, orderBy, page);
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ErrorLog> findById(@PathVariable Long id){
+    public ResponseEntity<ErrorLog> findById(@PathVariable Long id) {
         ErrorLog response = service.findById(id);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/log/{id}")
-    public ResponseEntity<LogDTO> findByIdShowLog(@PathVariable Long id){
+    public ResponseEntity<LogDTO> findByIdShowLog(@PathVariable Long id) {
         ErrorLog response = service.findById(id);
         LogDTO log = new LogDTO(response);
         return ResponseEntity.ok(log);
     }
 
     @PostMapping
-    public ResponseEntity<ErrorLog> save(@RequestBody ErrorLog errorLog){
+    public ResponseEntity<ErrorLog> save(@RequestBody ErrorLog errorLog) {
         ErrorLog response = service.save(errorLog);
-        URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(response.getId())
-                .toUri();
+        URI uri = getUri(response);
         return ResponseEntity.created(uri).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ErrorLog> update(@PathVariable Long id, @RequestBody ErrorLog errorLog){
+    public ResponseEntity<ErrorLog> update(@PathVariable Long id, @RequestBody ErrorLog errorLog) {
         ErrorLog response = service.update(id, errorLog);
         return ResponseEntity.ok(response);
+    }
+
+    private ExampleMatcher standardExampleMatcher(){
+        return ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+    }
+
+    private URI getUri(ErrorLog response){
+        return ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(response.getId())
+                .toUri();
     }
 
 }

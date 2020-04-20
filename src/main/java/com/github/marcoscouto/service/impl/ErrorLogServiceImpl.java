@@ -22,10 +22,9 @@ public class ErrorLogServiceImpl implements ErrorLogService {
 
     @Override
     public Page<ErrorLogDTO> findAll(Example example, String orderBy, Integer page) {
-        Sort sort = orderBy != null ? Sort.by(Sort.Direction.ASC, orderBy) : Sort.by(Sort.Direction.ASC, "id");
-        Page<ErrorLog> errors = repository.findAll(example, PageRequest.of(page, 5, sort));
-        List<ErrorLogDTO> errorsDTO = errors.getContent().stream().map(x -> new ErrorLogDTO(x)).collect(Collectors.toList());
-        Page<ErrorLogDTO> pageable = new PageImpl<ErrorLogDTO>(errorsDTO, PageRequest.of(page, 5, sort), errors.getTotalElements());
+        PageRequest pageRequest = getPageRequest(orderBy, page);
+        Page<ErrorLog> errors = repository.findAll(example, pageRequest);
+        Page<ErrorLogDTO> pageable = new PageImpl<ErrorLogDTO>(getErrorsDTO(errors),pageRequest, errors.getTotalElements());
         if (errors.isEmpty()) throw new NotFoundException("Error Log Exception", "Error logs not found");
         return pageable;
     }
@@ -55,6 +54,14 @@ public class ErrorLogServiceImpl implements ErrorLogService {
     public void delete(Long id) {
         findById(id);
         repository.deleteById(id);
+    }
+
+    private PageRequest getPageRequest(String orderBy, Integer page){
+        return PageRequest.of(page, 5,  Sort.by(Sort.Direction.ASC, orderBy));
+    }
+
+    private List<ErrorLogDTO> getErrorsDTO(Page<ErrorLog> errors){
+        return errors.getContent().stream().map(x -> new ErrorLogDTO(x)).collect(Collectors.toList());
     }
 
     private ErrorLog updateDataError(ErrorLog errorLog, ErrorLog newErrorLog) {
