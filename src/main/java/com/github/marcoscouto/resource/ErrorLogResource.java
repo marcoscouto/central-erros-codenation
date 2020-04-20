@@ -2,17 +2,17 @@ package com.github.marcoscouto.resource;
 
 import com.github.marcoscouto.domain.ErrorLog;
 import com.github.marcoscouto.dto.ErrorLogDTO;
+import com.github.marcoscouto.dto.LogDTO;
 import com.github.marcoscouto.service.ErrorLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,14 +22,13 @@ public class ErrorLogResource {
     private final ErrorLogService service;
 
     @GetMapping
-    public ResponseEntity<List<ErrorLogDTO>> findAll(ErrorLog data, String orderBy){
+    public ResponseEntity<Page<ErrorLogDTO>> findAll(ErrorLog data, @RequestParam(value = "orderby") String orderBy, @RequestParam(defaultValue = "0") Integer page){
         ExampleMatcher exampleMatcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         Example example = Example.of(data, exampleMatcher);
-        List<ErrorLog> response = service.findAll(example, orderBy);
-        List<ErrorLogDTO> dto = response.stream().map(x -> new ErrorLogDTO(x)).collect(Collectors.toList());
+        Page<ErrorLogDTO> dto = service.findAll(example, orderBy, page);
         return ResponseEntity.ok(dto);
     }
 
@@ -37,6 +36,13 @@ public class ErrorLogResource {
     public ResponseEntity<ErrorLog> findById(@PathVariable Long id){
         ErrorLog response = service.findById(id);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/log/{id}")
+    public ResponseEntity<LogDTO> findByIdShowLog(@PathVariable Long id){
+        ErrorLog response = service.findById(id);
+        LogDTO log = new LogDTO(response);
+        return ResponseEntity.ok(log);
     }
 
     @PostMapping

@@ -5,6 +5,7 @@ import com.github.marcoscouto.repository.UserRepository;
 import com.github.marcoscouto.service.UserService;
 import com.github.marcoscouto.service.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,9 +50,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private User updateUserData(User user, User newUser){
-        if(!newUser.getName().isEmpty() && !newUser.getName().isBlank() && newUser.getName() != null)
+        if(newUser.getName() != null && !newUser.getName().isEmpty() && !newUser.getName().isBlank())
             user.setName(newUser.getName());
-        if(!newUser.getCpf().isEmpty() && !newUser.getCpf().isBlank() && newUser.getCpf() != null)
+        if(newUser.getCpf() != null && !newUser.getCpf().isEmpty() && !newUser.getCpf().isBlank())
             user.setCpf(newUser.getCpf());
         if(newUser.getDateBirth() != null)
             user.setDateBirth(newUser.getDateBirth());
