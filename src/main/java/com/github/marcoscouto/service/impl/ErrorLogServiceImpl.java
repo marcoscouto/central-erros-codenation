@@ -65,13 +65,13 @@ public class ErrorLogServiceImpl implements ErrorLogService {
     }
 
     private ErrorLog updateDataError(ErrorLog errorLog, ErrorLog newErrorLog) {
-        if (newErrorLog.getDescription() != null && !newErrorLog.getDescription().isEmpty() && !newErrorLog.getDescription().isBlank())
+        if (newErrorLog.getDescription() != null && !newErrorLog.getDescription().isEmpty())
             errorLog.setDescription(newErrorLog.getDescription());
-        if (newErrorLog.getLog() != null && !newErrorLog.getLog().isEmpty() && !newErrorLog.getLog().isBlank())
+        if (newErrorLog.getLog() != null && !newErrorLog.getLog().isEmpty())
             errorLog.setLog(newErrorLog.getLog());
-        if (newErrorLog.getOrigin() != null && !newErrorLog.getOrigin().isEmpty() && !newErrorLog.getOrigin().isBlank())
+        if (newErrorLog.getOrigin() != null && !newErrorLog.getOrigin().isEmpty())
             errorLog.setOrigin(newErrorLog.getOrigin());
-        if (newErrorLog.getLevel() != null && !newErrorLog.getLevel().toString().isEmpty() && !newErrorLog.getLevel().toString().isBlank())
+        if (newErrorLog.getLevel() != null && !newErrorLog.getLevel().toString().isEmpty())
             errorLog.setLevel(newErrorLog.getLevel());
         return errorLog;
     }

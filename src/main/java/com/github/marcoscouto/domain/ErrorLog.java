@@ -33,7 +33,7 @@ public class ErrorLog implements Serializable {
 
     @NotNull(message = "Level é obrigatório")
     private LevelEnum level;
-
+    
     private LocalDateTime timestamp;
 
     @NotNull(message = "Quantidade é obrigatório")
