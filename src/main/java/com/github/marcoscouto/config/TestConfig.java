@@ -16,7 +16,7 @@ import java.time.ZoneId;
 import java.util.Arrays;
 
 @Configuration
-@Profile("dev")
+@Profile("test")
 @RequiredArgsConstructor
 public class TestConfig implements CommandLineRunner {
 

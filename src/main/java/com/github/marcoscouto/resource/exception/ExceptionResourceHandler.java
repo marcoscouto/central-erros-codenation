@@ -3,6 +3,7 @@ package com.github.marcoscouto.resource.exception;
 import com.github.marcoscouto.exception.StandardError;
 import com.github.marcoscouto.service.exception.NotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
