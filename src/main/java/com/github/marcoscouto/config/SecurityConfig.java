@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,8 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private Environment environment;
 
-    @Qualifier("userDetailServiceImpl")
     @Autowired
+    @Qualifier("userDetailServiceImpl")
     private UserDetailsService userDetailsService;
 
     @Autowired
@@ -41,6 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS = {"/h2-console/**"};
 
+    private static final String[] ADMIN_MATCHERS = {"/**"};
+
+    private static final String[] USER_MATCHERS = {"/errors/**"};
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -49,6 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
+                .antMatchers(HttpMethod.GET, USER_MATCHERS).hasAuthority("USER")
+                .antMatchers(ADMIN_MATCHERS).hasAuthority("ADMIN")
                 .anyRequest().authenticated();
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
         http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));

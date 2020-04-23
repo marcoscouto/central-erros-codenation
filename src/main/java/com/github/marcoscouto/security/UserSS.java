@@ -25,7 +25,7 @@ public class UserSS implements UserDetails {
         this.id = user.getId();
         this.email = user.getEmail();
         this.password = user.getPassword();
-        this.authorities = Arrays.asList(new SimpleGrantedAuthority(user.getProfile().getDescription()));
+        this.authorities = Arrays.asList(new SimpleGrantedAuthority(user.getProfile().toString()));
     }
 
 
@@ -33,7 +33,7 @@ public class UserSS implements UserDetails {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.authorities = Arrays.asList(new SimpleGrantedAuthority(profileEnum.getDescription()));
+        this.authorities = Arrays.asList(new SimpleGrantedAuthority(profileEnum.toString()));
     }
 
     @Override

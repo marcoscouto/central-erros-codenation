@@ -3,6 +3,7 @@ package com.github.marcoscouto.config;
 import com.github.marcoscouto.domain.ErrorLog;
 import com.github.marcoscouto.domain.User;
 import com.github.marcoscouto.domain.enums.LevelEnum;
+import com.github.marcoscouto.domain.enums.ProfileEnum;
 import com.github.marcoscouto.repository.ErrorLogRepository;
 import com.github.marcoscouto.repository.UserRepository;
 import com.github.marcoscouto.service.UserService;
@@ -45,7 +46,7 @@ public class TestConfig implements CommandLineRunner {
 
         errorLogRepository.saveAll(Arrays.asList(e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13, e14, e15));
 
-        User u1 = new User(null, "John Doe", "23874442055", LocalDate.of(1990, 4, 30), "john@doe.com", "123", null);
+        User u1 = new User(null, "John Doe", "23874442055", LocalDate.of(1990, 4, 30), "john@doe.com", "123", ProfileEnum.ADMIN.getCode());
         User u2 = new User(null, "Jane Doe", "93387937024", LocalDate.of(1993, 8, 12), "jane@doe.com", "123", null);
 
         userService.save(u1);

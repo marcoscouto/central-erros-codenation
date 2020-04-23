@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.context.annotation.Profile;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
