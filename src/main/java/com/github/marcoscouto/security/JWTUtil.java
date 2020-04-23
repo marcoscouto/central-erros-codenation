@@ -1,5 +1,6 @@
 package com.github.marcoscouto.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,4 +38,30 @@ public class JWTUtil {
         return Date.from(instant);
     }
 
+    public boolean isValid(String token) {
+        Claims claims = getClaims(token);
+        if(!claims.isEmpty()){
+            String username = claims.getSubject();
+            Date expirationDate = claims.getExpiration();
+            if(!username.isEmpty() && expirationDate != null && new Date().before(expirationDate)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private Claims getClaims(String token) {
+        try{
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public String getUsername(String token) {
+        Claims claims = getClaims(token);
+        if(!claims.isEmpty()) return claims.getSubject();
+        return null;
+    }
 }

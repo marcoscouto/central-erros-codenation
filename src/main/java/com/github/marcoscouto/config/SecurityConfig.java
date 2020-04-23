@@ -2,6 +2,7 @@ package com.github.marcoscouto.config;
 
 import com.github.marcoscouto.exception.JWTAuthenticationFailureHandler;
 import com.github.marcoscouto.security.JWTAuthenticationFilter;
+import com.github.marcoscouto.security.JWTAuthorizationFilter;
 import com.github.marcoscouto.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -50,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .anyRequest().authenticated();
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
