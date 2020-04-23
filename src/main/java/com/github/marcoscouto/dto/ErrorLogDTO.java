@@ -4,10 +4,11 @@ import com.github.marcoscouto.domain.ErrorLog;
 import com.github.marcoscouto.domain.enums.LevelEnum;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class ErrorLogDTO {
+public class ErrorLogDTO implements Serializable {
 
     private String description;
     private String origin;

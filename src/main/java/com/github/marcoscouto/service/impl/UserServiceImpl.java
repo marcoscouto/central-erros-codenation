@@ -1,6 +1,7 @@
 package com.github.marcoscouto.service.impl;
 
 import com.github.marcoscouto.domain.User;
+import com.github.marcoscouto.domain.enums.ProfileEnum;
 import com.github.marcoscouto.repository.UserRepository;
 import com.github.marcoscouto.service.UserService;
 import com.github.marcoscouto.service.exception.NotFoundException;
@@ -36,6 +37,8 @@ public class UserServiceImpl implements UserService {
     public User save(User user) {
         user.setId(null);
         user.setPassword(encodePassword(user.getPassword()));
+        if(user.getProfile() == null)
+            user.setProfile(ProfileEnum.USER);
         return repository.save(user);
     }
 
@@ -61,9 +64,10 @@ public class UserServiceImpl implements UserService {
             user.setDateBirth(newUser.getDateBirth());
         if(newUser.getEmail() != null && !newUser.getCpf().isEmpty())
             user.setEmail(newUser.getEmail());
-        if(newUser.getPassword() != null && !newUser.getCpf().isEmpty()){
+        if(newUser.getPassword() != null && !newUser.getCpf().isEmpty())
             user.setPassword(encodePassword(newUser.getPassword()));
-        }
+        if(newUser.getProfile() != null)
+            user.setProfile(newUser.getProfile());
         return user;
     }
 

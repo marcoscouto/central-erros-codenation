@@ -1,10 +1,12 @@
 package com.github.marcoscouto.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.marcoscouto.domain.enums.ProfileEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.context.annotation.Profile;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -44,4 +46,13 @@ public class User implements Serializable {
     @NotEmpty(message = "Senha é obrigatória")
     private String password;
 
+    private Integer profile;
+
+    public ProfileEnum getProfile() {
+        return ProfileEnum.toEnum(profile);
+    }
+
+    public void setProfile(ProfileEnum profile) {
+        this.profile = profile.getCode();
+    }
 }

@@ -32,11 +32,18 @@ public class ErrorLog implements Serializable {
     private String origin;
 
     @NotNull(message = "Level é obrigatório")
-    private LevelEnum level;
+    private Integer level;
     
     private LocalDateTime timestamp;
 
     @NotNull(message = "Quantidade é obrigatório")
     private Integer quantity;
 
+    public LevelEnum getLevel() {
+        return LevelEnum.toEnum(level);
+    }
+
+    public void setLevel(LevelEnum level) {
+        this.level = level.getCode();
+    }
 }
