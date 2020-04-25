@@ -1,6 +1,7 @@
 package com.github.marcoscouto.resource;
 
 import com.github.marcoscouto.domain.User;
+import com.github.marcoscouto.dto.UserDTO;
 import com.github.marcoscouto.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,15 +21,17 @@ public class UserResource {
     private final UserService service;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll(){
+    public ResponseEntity<List<UserDTO>> findAll(){
         List<User> response = service.findAll();
-        return ResponseEntity.ok(response);
+        List<UserDTO> dto = response.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id){
         User response = service.findById(id);
-        return ResponseEntity.ok(response);
+        UserDTO dto = new UserDTO(response);
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping
