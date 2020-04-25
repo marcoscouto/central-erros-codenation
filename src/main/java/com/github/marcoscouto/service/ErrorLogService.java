@@ -5,7 +5,11 @@ import com.github.marcoscouto.dto.ErrorLogDTO;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface ErrorLogService {
+
+    List<ErrorLogDTO> findAll(Example example, String sort);
 
     Page<ErrorLogDTO> findAll(Example example, String sort, Integer page);
 

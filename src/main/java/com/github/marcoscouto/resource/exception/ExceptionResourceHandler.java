@@ -2,6 +2,7 @@ package com.github.marcoscouto.resource.exception;
 
 import com.github.marcoscouto.exception.StandardError;
 import com.github.marcoscouto.service.exception.NotFoundException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -43,6 +44,12 @@ public class ExceptionResourceHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<StandardError> handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
         StandardError se = new StandardError("Argumento inválido", e.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.toList()), instant);
+        return ResponseEntity.status(400).body(se);
+    }
+
+    @ExceptionHandler(PropertyReferenceException.class)
+    public ResponseEntity<StandardError> handlePropertyReferenceException(PropertyReferenceException e){
+        StandardError se = new StandardError("Propriedade inválida", Arrays.asList("A propriedade não existe. Propriedade: " +  e.getPropertyName()), instant);
         return ResponseEntity.status(400).body(se);
     }
 

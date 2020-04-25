@@ -22,7 +22,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         List<User> users = repository.findAll();
-        if(users.isEmpty()) throw new NotFoundException("User Exception", "Users not found");
+        if(users.isEmpty())
+            throw new NotFoundException("User Exception", "Users not found");
         return users;
     }
 

@@ -21,11 +21,23 @@ public class ErrorLogServiceImpl implements ErrorLogService {
     private final ErrorLogRepository repository;
 
     @Override
+    public List<ErrorLogDTO> findAll(Example example, String sort) {
+        List<ErrorLog> errors = repository.findAll(example, Sort.by(sort));
+        if (errors.isEmpty())
+            throw new NotFoundException("Error Log Exception", "Error logs not found");
+        List<ErrorLogDTO> dto = errors.stream().map(x -> new ErrorLogDTO(x)).collect(Collectors.toList());
+        return dto;
+    }
+
+    @Override
     public Page<ErrorLogDTO> findAll(Example example, String orderBy, Integer page) {
+        if(page == null)
+            page = 0;
         PageRequest pageRequest = getPageRequest(orderBy, page);
         Page<ErrorLog> errors = repository.findAll(example, pageRequest);
+        if (errors.isEmpty())
+            throw new NotFoundException("Error Log Exception", "Error logs not found");
         Page<ErrorLogDTO> pageable = new PageImpl<ErrorLogDTO>(getErrorsDTO(errors),pageRequest, errors.getTotalElements());
-        if (errors.isEmpty()) throw new NotFoundException("Error Log Exception", "Error logs not found");
         return pageable;
     }
 

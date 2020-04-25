@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,10 +24,20 @@ public class ErrorLogResource {
     private final ErrorLogService service;
 
     @GetMapping
+    public ResponseEntity<List<ErrorLogDTO>> findAll(
+            ErrorLog data,
+            @RequestParam(value = "orderby", defaultValue = "id") String orderBy){
+
+        Example example = Example.of(data, standardExampleMatcher());
+        List<ErrorLogDTO> dto = service.findAll(example, orderBy);
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/page/{page}")
     public ResponseEntity<Page<ErrorLogDTO>> findAll(
             ErrorLog data,
             @RequestParam(value = "orderby", defaultValue = "id") String orderBy,
-            @RequestParam(defaultValue = "0") Integer page) {
+            @PathVariable(value = "page", required = false) Integer page) {
 
         Example example = Example.of(data, standardExampleMatcher());
         Page<ErrorLogDTO> dto = service.findAll(example, orderBy, page);
@@ -34,9 +45,10 @@ public class ErrorLogResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ErrorLog> findById(@PathVariable Long id) {
+    public ResponseEntity<ErrorLogDTO> findById(@PathVariable Long id) {
         ErrorLog response = service.findById(id);
-        return ResponseEntity.ok(response);
+        ErrorLogDTO dto  = new ErrorLogDTO(response);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/log/{id}")
@@ -54,7 +66,7 @@ public class ErrorLogResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ErrorLog> update(@PathVariable Long id, @RequestBody @Valid ErrorLog errorLog) {
+    public ResponseEntity<ErrorLog> update(@PathVariable Long id, @RequestBody ErrorLog errorLog) {
         ErrorLog response = service.update(id, errorLog);
         return ResponseEntity.ok(response);
     }

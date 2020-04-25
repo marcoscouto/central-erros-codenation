@@ -37,8 +37,8 @@ public class TestConfig implements CommandLineRunner {
         ErrorLog e7 = new ErrorLog(null, "Erro de API", "A API apresentou um erro", "API", 1, LocalDateTime.now(ZoneId.of("UTC")), 1);
         ErrorLog e8 = new ErrorLog(null, "Aviso de tentativa de exclusão", "Uma tentativa de exclusão de registro ocorreu", "Banco de Dados", 2, LocalDateTime.now(ZoneId.of("UTC")), 3);
         ErrorLog e9 = new ErrorLog(null, "Aviso de licença em expiração", "A licença vai expirar daqui 30 dias", "Licença", 1, LocalDateTime.now(ZoneId.of("UTC")), 2);
-        ErrorLog e10 = new ErrorLog(null, "Erro na Licença", "Licença não registrada", "Licensa", 1, LocalDateTime.now(ZoneId.of("UTC")), 1);
-        ErrorLog e11 = new ErrorLog(null, "Informações sobre a licença", "Licença válida por 1 ano", "Licensa", 3, LocalDateTime.now(ZoneId.of("UTC")), 2);
+        ErrorLog e10 = new ErrorLog(null, "Erro na Licença", "Licença não registrada", "Licença", 1, LocalDateTime.now(ZoneId.of("UTC")), 1);
+        ErrorLog e11 = new ErrorLog(null, "Informações sobre a licença", "Licença válida por 1 ano", "Licença", 3, LocalDateTime.now(ZoneId.of("UTC")), 2);
         ErrorLog e12 = new ErrorLog(null, "Informações de Hardware", "Relatório sobre o hardware indisponível", "Hardware", 2, LocalDateTime.now(ZoneId.of("UTC")), 3);
         ErrorLog e13 = new ErrorLog(null, "Erro de hardware", "O hardware não é compatível", "Hardware", 1, LocalDateTime.now(ZoneId.of("UTC")), 1);
         ErrorLog e14 = new ErrorLog(null, "Aviso de consumo de energia", "O equipamento está consumindo muita energia", "Energia", 2, LocalDateTime.now(ZoneId.of("UTC")), 3);
