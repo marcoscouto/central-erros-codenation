@@ -5,6 +5,7 @@ import com.github.marcoscouto.service.exception.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -39,16 +40,10 @@ public class ExceptionResourceHandler {
         return ResponseEntity.status(400).body(se);
     }
 
-    @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<StandardError> handleAuthenticationException(AuthenticationException e){
-        StandardError se = new StandardError("Erro de autenticação", Arrays.asList(e.getMessage()), instant);
-        return ResponseEntity.status(401).body(se);
-    }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<StandardError> handleAccessDeniedException(AccessDeniedException e){
-        StandardError se = new StandardError("Erro de autorização", Arrays.asList(e.getMessage()), instant);
-        return ResponseEntity.status(403).body(se);
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<StandardError> handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
+        StandardError se = new StandardError("Argumento inválido", e.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage()).collect(Collectors.toList()), instant);
+        return ResponseEntity.status(400).body(se);
     }
 
 }

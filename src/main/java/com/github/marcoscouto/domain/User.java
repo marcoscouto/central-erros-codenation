@@ -40,8 +40,7 @@ public class User implements Serializable {
     @Email(message = "Email precisa ser válido")
     @Column(unique = true)
     private String email;
-
-    @JsonIgnore
+    
     @NotEmpty(message = "Senha é obrigatória")
     private String password;
 

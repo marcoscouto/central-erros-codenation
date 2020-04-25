@@ -39,11 +39,4 @@ public class ErrorLog implements Serializable {
     @NotNull(message = "Quantidade é obrigatório")
     private Integer quantity;
 
-    public LevelEnum getLevel() {
-        return LevelEnum.toEnum(level);
-    }
-
-    public void setLevel(LevelEnum level) {
-        this.level = level.getCode();
-    }
 }

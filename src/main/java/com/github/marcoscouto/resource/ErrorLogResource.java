@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -46,14 +47,14 @@ public class ErrorLogResource {
     }
 
     @PostMapping
-    public ResponseEntity<ErrorLog> save(@RequestBody ErrorLog errorLog) {
+    public ResponseEntity<ErrorLog> save(@RequestBody @Valid ErrorLog errorLog) {
         ErrorLog response = service.save(errorLog);
         URI uri = getUri(response);
         return ResponseEntity.created(uri).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ErrorLog> update(@PathVariable Long id, @RequestBody ErrorLog errorLog) {
+    public ResponseEntity<ErrorLog> update(@PathVariable Long id, @RequestBody @Valid ErrorLog errorLog) {
         ErrorLog response = service.update(id, errorLog);
         return ResponseEntity.ok(response);
     }
