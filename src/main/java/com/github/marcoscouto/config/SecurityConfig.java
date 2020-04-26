@@ -1,5 +1,6 @@
 package com.github.marcoscouto.config;
 
+import com.github.marcoscouto.exception.AuthenticationEntryPointExceptionHandler;
 import com.github.marcoscouto.exception.JWTAuthenticationFailureHandler;
 import com.github.marcoscouto.security.JWTAuthenticationFilter;
 import com.github.marcoscouto.security.JWTAuthorizationFilter;
@@ -65,7 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .antMatchers(HttpMethod.GET, USER_MATCHERS).hasAnyRole("USER", "ADMIN")
                 .antMatchers(ADMIN_MATCHERS).hasRole("ADMIN")
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+        .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(entryPointExceptionHandler());
 
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
         http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
@@ -98,6 +102,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(SWAGGER_MATCHERS);
+    }
+
+    @Bean
+    public AuthenticationEntryPointExceptionHandler entryPointExceptionHandler(){
+        return new AuthenticationEntryPointExceptionHandler();
     }
 
 
