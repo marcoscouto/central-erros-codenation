@@ -45,10 +45,9 @@ public class ErrorLogResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ErrorLogDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<ErrorLog> findById(@PathVariable Long id) {
         ErrorLog response = service.findById(id);
-        ErrorLogDTO dto  = new ErrorLogDTO(response);
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/log/{id}")

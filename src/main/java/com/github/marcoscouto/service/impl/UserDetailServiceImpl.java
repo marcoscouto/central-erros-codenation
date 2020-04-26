@@ -2,7 +2,6 @@ package com.github.marcoscouto.service.impl;
 
 import com.github.marcoscouto.domain.User;
 import com.github.marcoscouto.repository.UserRepository;
-import com.github.marcoscouto.security.UserSS;
 import com.github.marcoscouto.service.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +18,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = repository.findUserByEmail(email).orElseThrow(() -> new NotFoundException("Erro UserSS", "Usuário não encontrado"));
-        return new UserSS(user);
+        return org.springframework.security.core.userdetails.User
+                .builder()
+                .username(user.getEmail())
+                .password(user.getPassword())
+                .roles(user.getProfile().toString())
+                .build();
     }
 
 }
