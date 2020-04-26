@@ -1,5 +1,6 @@
 package com.github.marcoscouto.config;
 
+import com.github.marcoscouto.exception.AccessDeniedExceptionHandler;
 import com.github.marcoscouto.exception.AuthenticationEntryPointExceptionHandler;
 import com.github.marcoscouto.exception.JWTAuthenticationFailureHandler;
 import com.github.marcoscouto.security.JWTAuthenticationFilter;
@@ -69,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
         .and()
                 .exceptionHandling()
+                .accessDeniedHandler(accessDeniedExceptionHandler())
                 .authenticationEntryPoint(entryPointExceptionHandler());
 
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
@@ -107,6 +109,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationEntryPointExceptionHandler entryPointExceptionHandler(){
         return new AuthenticationEntryPointExceptionHandler();
+    }
+
+    @Bean
+    public AccessDeniedExceptionHandler accessDeniedExceptionHandler(){
+        return new AccessDeniedExceptionHandler();
     }
 
 
