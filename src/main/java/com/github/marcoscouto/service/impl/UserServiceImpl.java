@@ -2,6 +2,7 @@ package com.github.marcoscouto.service.impl;
 
 import com.github.marcoscouto.domain.User;
 import com.github.marcoscouto.domain.enums.ProfileEnum;
+import com.github.marcoscouto.dto.UserDTO;
 import com.github.marcoscouto.repository.UserRepository;
 import com.github.marcoscouto.service.UserService;
 import com.github.marcoscouto.service.exception.NotFoundException;
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(Long id, User newUser) {
+    public User update(Long id, UserDTO newUser) {
         User user = findById(id);
         user = updateUserData(user, newUser);
         return repository.save(user);
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
         repository.deleteById(id);
     }
 
-    private User updateUserData(User user, User newUser){
+    private User updateUserData(User user, UserDTO newUser){
         if(newUser.getName() != null && !newUser.getName().isEmpty())
             user.setName(newUser.getName());
         if(newUser.getCpf() != null && !newUser.getCpf().isEmpty())
@@ -67,8 +68,8 @@ public class UserServiceImpl implements UserService {
             user.setEmail(newUser.getEmail());
         if(newUser.getPassword() != null && !newUser.getCpf().isEmpty())
             user.setPassword(encodePassword(newUser.getPassword()));
-        if(newUser.getProfile() != null)
-            user.setProfile(newUser.getProfile());
+        if(newUser.getProfileCode() != null)
+            user.setProfile(ProfileEnum.toEnum(newUser.getProfileCode()));
         return user;
     }
 
