@@ -19,6 +19,7 @@ public class AuthenticationEntryPointExceptionHandler implements AuthenticationE
         httpServletResponse.setStatus(403);
         httpServletResponse.setContentType("application/json");
         httpServletResponse.getWriter().write(getJsonResponse());
+        httpServletResponse.setCharacterEncoding("UTF-8");
     }
 
     private String getJsonResponse(){
