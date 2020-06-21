@@ -70,6 +70,12 @@ public class ErrorLogResource {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
     private ExampleMatcher standardExampleMatcher(){
         return ExampleMatcher
                 .matching()
